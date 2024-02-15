@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="container py-5">
+    <section class="card card-body">
+        <div class="text-center">
+            <img src="{% static 'images/logo-jpm-brown.svg' %}" class="img-fluid" style="height: 150px;width: 50%"/>
+            <h1 class="display-6 text-center" >VeriFix Parameters Administration</h1><br>
+        </div>
+        <table class="table table-bordered border-success">
+            <thead class="border-bottom table-dark">
+                <tr>
+                    <td>User Name</td>
+                    <td>Parameter 1</td>
+                    <td>Parameter 2</td>
+                    <td>Parameter 3</td>
+                    <td>Parameter 4</td>
+                    <td>Parameter 5</td>
+                    {% if user.is_staff %}
+                    <td>
+                        <a href="{% url 'register' %}" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Add User's Parameters
+                        </a>
+                    </td>
+                    {% else %}
+                    <td>
+                        Actions
+                    </td>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody class="table-group-divider border-success">
+                {% for parameter in parameters_list %}
+                    <tr>
+                        <td>{{parameter.user}}</td>
+                        <td>{{parameter.parameter1}}</td>
+                        <td>{{parameter.parameter2}}</td>
+                        <td>{{parameter.parameter3}}</td>
+                        <td>{{parameter.parameter4}}</td>
+                        <td>{{parameter.parameter5}}</td>
+                        <td>
+                            <a href="{% url 'parameter_detail' parameter.id %}" class="btn text-secondary px-0">
+                                <i class="far fa-edit fa-lg"></i>
+                            </a>
+                            {% if user.is_staff %}
+                            <form action="{% url 'home'  %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">
+                                    <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </section>
+</main>
+{% endblock %}
