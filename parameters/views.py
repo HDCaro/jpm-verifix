@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
 from parameters.forms import CreateUserForm, ParametersForm
@@ -23,7 +22,7 @@ def home(request):
         return render(request, "home.html")
 
 
-def loginPage(request):
+def login_user(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -43,7 +42,7 @@ def loginPage(request):
         return render(request, 'login.html', context)
 
 
-def logoutUser(request):
+def logout_user(request):
     logout(request)
     return redirect('login')
 
