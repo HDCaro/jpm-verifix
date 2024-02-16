@@ -68,6 +68,26 @@ def register_user(request):
 
 
 @login_required
+def parameter_create(request):
+    if request.method == 'GET':
+        return render(request, 'parameter_create.html', {
+            'form': ParametersForm
+        })
+    else:
+        try:
+            form = ParametersForm(request.POST)
+            new_parameter = form.save(commit=False)
+            new_parameter.user = request.user
+            new_parameter.save()
+            return redirect('home')
+        except ValueError:
+            return render(request, 'parameter_create.html', {
+                'form': ParametersForm,
+                'error': 'Please provide valid data'
+            })
+
+
+@login_required
 def parameter_detail(request, parameter_id):
     if request.method == 'GET':
         parameter = get_object_or_404(Parameter, pk=parameter_id)
