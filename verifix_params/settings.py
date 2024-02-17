@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'verifix_params.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jpm_verifix',
+        'NAME': 'jpm',
         'USER': 'root',
         'HOST': '127.0.0.1',
         'PORT': 3306,
