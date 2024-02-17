@@ -76,14 +76,11 @@ def parameter_create(request):
         try:
             form = ParametersForm(request.POST)
             new_parameter = form.save(commit=False)
-            new_parameter.user = request.user
             new_parameter.save()
             return redirect('home')
         except ValueError:
-            return render(request, 'parameter_create.html', {
-                'form': ParametersForm,
-                'error': 'Please provide valid data'
-            })
+            return render(request, 'parameter_create.html', {'form': form,
+                                                             'error': 'Error creating parameter'})
 
 
 @login_required
