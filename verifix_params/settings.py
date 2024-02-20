@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
 import os.path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -27,7 +27,6 @@ SECRET_KEY = 'django-insecure-@cbz%(k63g8p*2g_l59fg5rl7k#l7w2g9jz^hy^&w8qsrk!17c
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -71,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'verifix_params.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -88,6 +86,25 @@ DATABASES = {
         }
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'jpm',
+#         'USER': 'hcaro',
+#         'HOST': 'terraform-20221222162706457700000001.cuq8flqsup1n.us-east-1.rds.amazonaws.com',
+#         'PORT': 3306,
+#         'PASSWORD': '4[bH8)ZJi35&',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'ssl': {
+#                 'ca': '/path/to/ca-certificate.pem',  # Path to CA certificate
+#                 'cert': '/path/to/client-certificate.pem',  # Path to client certificate
+#                 'key': '/path/to/client-key.pem',  # Path to client key
+#             },
+#         }
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -107,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -118,7 +134,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -132,3 +147,11 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
