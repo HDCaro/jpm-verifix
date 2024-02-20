@@ -12,11 +12,11 @@
             <thead class="border-bottom table-dark">
                 <tr>
                     <td>User Name</td>
+                    <td>CompID</td>
                     <td>Parameter 1</td>
                     <td>Parameter 2</td>
                     <td>Parameter 3</td>
                     <td>Parameter 4</td>
-                    <td>Parameter 5</td>
                     {% if user.is_staff %}
                     <td>
                         <a href="{% url 'parameter_create' %}" class="btn btn-success">
@@ -34,11 +34,11 @@
                 {% for parameter in parameters_list %}
                     <tr>
                         <td>{{parameter.user}}</td>
+                        <td>{{parameter.compID}}</td>
                         <td>{{parameter.parameter1}}</td>
                         <td>{{parameter.parameter2}}</td>
                         <td>{{parameter.parameter3}}</td>
                         <td>{{parameter.parameter4}}</td>
-                        <td>{{parameter.parameter5}}</td>
                         <td>
                             <a href="{% url 'parameter_detail' parameter.id %}" class="btn text-secondary px-0">
                                 <i class="far fa-edit fa-lg"></i>

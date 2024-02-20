@@ -14,12 +14,12 @@ class CreateUserForm(UserCreationForm):
 class ParametersForm(forms.ModelForm):
     class Meta:
         model = Parameter
-        fields = ['parameter1', 'parameter2', 'parameter3', 'parameter4', 'parameter5', 'user']
+        fields = ['compID', 'parameter1', 'parameter2', 'parameter3', 'parameter4', 'user']
         widgets = {
+            'compID': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write compID'}),
             'parameter1': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 1'}),
             'parameter2': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 2'}),
             'parameter3': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 3'}),
             'parameter4': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 4'}),
-            'parameter5': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 5'}),
             'user': forms.Select(attrs={'class': 'form-control'}),
         }
