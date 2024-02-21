@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '44.219.3.6']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -97,6 +98,11 @@ DATABASES = {
 #         'PASSWORD': '4[bH8)ZJi35&',
 #         'OPTIONS': {
 #             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'ssl': {
+#                 'ca': '/path/to/ca-certificate.pem',  # Path to CA certificate
+#                 'cert': '/path/to/client-certificate.pem',  # Path to client certificate
+#                 'key': '/path/to/client-key.pem',  # Path to client key
+#             },
 #         }
 #     }
 # }
