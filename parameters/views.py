@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 
 from parameters.forms import CreateUserForm, ParametersForm
@@ -77,6 +78,8 @@ def parameter_create(request):
             form = ParametersForm(request.POST)
             new_parameter = form.save(commit=False)
             new_parameter.save()
+            user_id = form.cleaned_data.get('user')
+            messages.success(request, 'Parameter was created for ' + str(user_id))
             return redirect('home')
         except ValueError:
             return render(request, 'parameter_create.html', {'form': form,
@@ -94,6 +97,8 @@ def parameter_detail(request, parameter_id):
             parameter = get_object_or_404(Parameter, pk=parameter_id)
             form = ParametersForm(request.POST, instance=parameter)
             form.save()
+            user_id = form.cleaned_data.get('user')
+            messages.success(request, 'Parameter was updated for ' + str(user_id))
             return redirect('home')
         except ValueError:
             return render(request, 'parameter_detail.html', {'parameter': parameter, 'form': form,

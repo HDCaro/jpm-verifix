@@ -1,2 +1,2 @@
-# jpm-verifix
-Django CRUD for VeriFix parameters set
+# jpm-Cert Environment
+Django CRUD for Cert Environment parameters set
