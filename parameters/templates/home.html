@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
+<script>
+    function delete_parameter(id) {
+        Swal.fire({
+            "title": "Are you sure?",
+            "text": "This action can't be reversed"
+            "icon": "question",
+            "showCancelButton": true
+        })
+        .then(function(result){
+            if (result.isConfirmed) {
+                window.location.href = "/delete_parameter/"+id+"/"
+            }
+        })
+</script>
 {% load static %}
 
 {% block content %}
@@ -11,16 +25,16 @@
         <table class="table table-bordered border-success">
             <thead class="border-bottom table-dark">
                 <tr>
-                    <td>User Name</td>
                     <td>CompID</td>
                     <td>Parameter 1</td>
                     <td>Parameter 2</td>
                     <td>Parameter 3</td>
                     <td>Parameter 4</td>
+                    <td>Last Updated</td>
                     {% if user.is_staff %}
                     <td>
                         <a href="{% url 'parameter_create' %}" class="btn btn-success">
-                            <i class="fas fa-plus"></i> Add User's Parameters
+                            <i class="fas fa-plus"></i> Add New CompID Parameters
                         </a>
                     </td>
                     {% else %}
@@ -33,12 +47,12 @@
             <tbody class="table-group-divider border-success">
                 {% for parameter in parameters_list %}
                     <tr>
-                        <td>{{parameter.user}}</td>
                         <td>{{parameter.compID}}</td>
                         <td>{{parameter.parameter1}}</td>
                         <td>{{parameter.parameter2}}</td>
                         <td>{{parameter.parameter3}}</td>
                         <td>{{parameter.parameter4}}</td>
+                        <td>{{parameter.updated}}</td>
                         <td>
                             <a href="{% url 'parameter_detail' parameter.id %}" class="btn text-secondary px-0">
                                 <i class="far fa-edit fa-lg"></i>
