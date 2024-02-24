@@ -96,7 +96,7 @@ def parameter_detail(request, parameter_id):
             parameter = get_object_or_404(Parameter, pk=parameter_id)
             form = ParametersForm(request.POST, instance=parameter)
             form.save()
-            messages.success(request, 'Parameter was created for CompID: ' + form.cleaned_data.get('compID'))
+            messages.success(request, 'Parameter updated\\nCompID: ' + form.cleaned_data.get('compID'))
             return redirect('home')
         except ValueError:
             return render(request, 'parameter_detail.html', {'parameter': parameter, 'form': form,
@@ -107,6 +107,6 @@ def parameter_detail(request, parameter_id):
 def parameter_delete(request, parameter_id):
     parameter = get_object_or_404(Parameter, pk=parameter_id)
     parameter.delete()
-    message.success(request, "Parameter deleted OK")
+    messages.success(request, "Parameters deleted\\nfor CompID: " + parameter.compID)
     return redirect('home')
 

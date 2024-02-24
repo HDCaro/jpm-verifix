@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
-<script>
-    function delete_parameter(id) {
-        Swal.fire({
-            "title": "Are you sure?",
-            "text": "This action can't be reversed"
-            "icon": "question",
-            "showCancelButton": true
-        })
-        .then(function(result){
-            if (result.isConfirmed) {
-                window.location.href = "/delete_parameter/"+id+"/"
-            }
-        })
-</script>
+
 {% load static %}
 
+
 {% block content %}
+<script>
+    function deleteParameter(id) {
+            Swal.fire({
+                "title": "Are you sure?",
+                "text": "This action can't be reversed",
+                "icon": "question",
+                "showCancelButton": true,
+                "cancelButtonText": "No, Cancel",
+                "confirmButtonText": "Yes, Delete",
+                "reverseButtons": true,
+                "confirmButtonColor": "red",
+            })
+            .then(function(result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/parameter/delete/"+id+"/";
+                }
+            });
+        }
+</script>
 <main class="container py-5">
     <section class="card card-body">
         <div class="text-center">
@@ -58,7 +65,7 @@
                                 <i class="far fa-edit fa-lg"></i>
                             </a>
                             {% if user.is_staff %}
-                            <a href="{% url 'parameter_detail' parameter.id %}" class="btn text-secondary px-0">
+                            <a href="#" onclick="console.log({{parameter.id}});deleteParameter({{parameter.id}})" class="btn text-secondary px-0">
                                 <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
                             </a>
                             {% endif %}
