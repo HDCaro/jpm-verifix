@@ -101,3 +101,12 @@ def parameter_detail(request, parameter_id):
         except ValueError:
             return render(request, 'parameter_detail.html', {'parameter': parameter, 'form': form,
                                                              'error': 'Error updating parameter'})
+
+
+@login_required
+def parameter_delete(request, parameter_id):
+    parameter = get_object_or_404(Parameter, pk=parameter_id)
+    parameter.delete()
+    message.success(request, "Parameter deleted OK")
+    return redirect('home')
+
