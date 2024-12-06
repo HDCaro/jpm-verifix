@@ -76,14 +76,19 @@ def parameter_create(request):
     else:
         try:
             form = ParametersForm(request.POST)
-            new_parameter = form.save(commit=False)
-            new_parameter.save()
-            messages.success(request, 'Parameter was created for CompID: ' + form.cleaned_data.get('compID'))
-            return redirect('home')
+            if form.is_valid():
+                new_parameter = form.save(commit=False)
+                new_parameter.user = request.user  # Assign the logged-in user
+                new_parameter.save()
+                messages.success(request, 'Parameter was created for CompID: ' + form.cleaned_data.get('compID'))
+                return redirect('home')
+            else:
+                # Handle form validation errors
+                return render(request, 'parameter_create.html', {'form': form,
+                                                                 'error': 'Invalid form data.'})
         except ValueError:
             return render(request, 'parameter_create.html', {'form': form,
                                                              'error': 'Error creating parameter'})
-
 
 @login_required
 def parameter_detail(request, parameter_id):
