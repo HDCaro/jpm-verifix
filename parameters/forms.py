@@ -14,11 +14,13 @@ class CreateUserForm(UserCreationForm):
 class ParametersForm(forms.ModelForm):
     class Meta:
         model = Parameter
-        fields = ['compID', 'parameter1', 'parameter2', 'parameter3', 'parameter4']
+        fields = ['compID', 'product', 'value_date', 'security', 'notional', 'currency_pair', 'side']
         widgets = {
             'compID': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write compID'}),
-            'parameter1': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 1'}),
-            'parameter2': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 2'}),
-            'parameter3': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 3'}),
-            'parameter4': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write parameter 4'}),
+            'product': forms.Select(attrs={'class': 'form-control'}),
+            'value_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'security': forms.Select(attrs={'class': 'form-control'}),
+            'notional': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter notional amount'}),
+            'currency_pair': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter currency pair'}),
+            'side': forms.Select(attrs={'class': 'form-control'}),
         }

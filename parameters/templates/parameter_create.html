@@ -1,26 +1,101 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-
-<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-            <img class="card-img-top" src="{% static 'images/logo-jpm-brown.svg' %}" alt="Card image cap">
-				<div class="d-flex justify-content-center ">
-					<h3 class="text-success" id="form-title">Cert Environment Parameters</h3>
-				</div>
-            {{error}}
-            <form action="" method="POST">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Parameter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>Create Parameter</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
                 {% csrf_token %}
-                {{form.as_p}}
-                <div class="d-flex justify-content-center mt-3 login_container">
-                    <input class="btn btn-success" type="submit" value="Create">&nbsp;
-                    <a class="btn btn-secondary" href="{% url 'home'%}">Home</a>
+
+                <div class="form-group row">
+                    <label for="id_compID" class="col-sm-3 col-form-label">{{ form.compID.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.compID }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_product" class="col-sm-3 col-form-label">{{ form.product.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.product }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_value_date" class="col-sm-3 col-form-label">{{ form.value_date.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.value_date }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_security" class="col-sm-3 col-form-label">{{ form.security.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.security }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_notional" class="col-sm-3 col-form-label">{{ form.notional.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.notional }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_currency_pair" class="col-sm-3 col-form-label">{{ form.currency_pair.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.currency_pair }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="id_side" class="col-sm-3 col-form-label">{{ form.side.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.side }}
+                    </div>
+                </div>
+
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-success">Book Trade</button>
                 </div>
             </form>
-
         </div>
     </div>
-</main>
+</div>
 
-{% endblock %}
+<script>
+    // Dynamic population of Security field based on Product selection
+    const securityOptions = {
+        FOR: ['FXNDF', 'FXSWAP', 'FXFORWARD', 'FXSPOT'],
+        OPT: ['VANILLA', 'SINGLE_BARRIER'],
+        BASEMETALS: ['Outright', 'TimeSpread'],
+        ENERGY: ['Outright', 'TimeSpread'],
+        AGS: ['Outright', 'TimeSpread'],
+        INDEX: ['Outright', 'TimeSpread']
+    };
+
+    $(document).ready(function() {
+        $('#id_product').change(function() {
+            const product = $(this).val();
+            const options = securityOptions[product] || [];
+            const securityField = $('#id_security');
+            securityField.empty();
+            options.forEach(option => {
+                securityField.append(new Option(option, option));
+            });
+        });
+    });
+</script>
+</body>
+</html>

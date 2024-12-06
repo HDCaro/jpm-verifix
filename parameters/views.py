@@ -70,25 +70,22 @@ def register_user(request):
 @login_required
 def parameter_create(request):
     if request.method == 'GET':
-        return render(request, 'parameter_create.html', {
-            'form': ParametersForm
-        })
+        form = ParametersForm()
+        return render(request, 'parameter_create.html', {'form': form})
     else:
         try:
             form = ParametersForm(request.POST)
             if form.is_valid():
-                new_parameter = form.save(commit=False)
-                new_parameter.user = request.user  # Assign the logged-in user
-                new_parameter.save()
-                messages.success(request, 'Parameter was created for CompID: ' + form.cleaned_data.get('compID'))
+                parameter = form.save(commit=False)
+                parameter.user = request.user
+                parameter.save()
+                messages.success(request, f'Parameter created successfully for CompID: {form.cleaned_data["compID"]}')
                 return redirect('home')
             else:
-                # Handle form validation errors
-                return render(request, 'parameter_create.html', {'form': form,
-                                                                 'error': 'Invalid form data.'})
-        except ValueError:
-            return render(request, 'parameter_create.html', {'form': form,
-                                                             'error': 'Error creating parameter'})
+                return render(request, 'parameter_create.html', {'form': form, 'error': 'Invalid form data.'})
+        except Exception as e:
+            return render(request, 'parameter_create.html', {'form': form, 'error': f'Error: {str(e)}'})
+
 
 @login_required
 def parameter_detail(request, parameter_id):
@@ -114,4 +111,3 @@ def parameter_delete(request, parameter_id):
     parameter.delete()
     messages.success(request, "Parameters deleted\\nfor CompID: " + parameter.compID)
     return redirect('home')
-
