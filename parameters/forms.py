@@ -16,11 +16,30 @@ class ParametersForm(forms.ModelForm):
         model = Parameter
         fields = ['compID', 'product', 'value_date', 'security', 'notional', 'currency_pair', 'side']
         widgets = {
-            'compID': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Write compID'}),
-            'product': forms.Select(attrs={'class': 'form-control'}),
-            'value_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'security': forms.Select(attrs={'class': 'form-control'}),
-            'notional': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter notional amount'}),
-            'currency_pair': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter currency pair'}),
-            'side': forms.Select(attrs={'class': 'form-control'}),
+            'compID': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Write compID',
+                'maxlength': 100
+            }),
+            'product': forms.Select(attrs={
+                'class': 'form-control bg-light border-dark text-dark font-weight-bold'
+            }),
+            'value_date': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date'
+            }),
+            'security': forms.Select(attrs={
+                'class': 'form-control bg-light border-dark text-dark font-weight-bold'
+            }),
+            'notional': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter notional amount'
+            }),
+            'currency_pair': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter currency pair'
+            }),
+            'side': forms.Select(attrs={
+                'class': 'form-control bg-light border-dark text-dark font-weight-bold'
+            }),
         }

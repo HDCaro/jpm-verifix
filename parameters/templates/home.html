@@ -2,32 +2,31 @@
 
 {% load static %}
 
-
 {% block content %}
 <script>
     function deleteParameter(id) {
-            Swal.fire({
-                "title": "Are you sure?",
-                "text": "This action can't be reversed",
-                "icon": "question",
-                "showCancelButton": true,
-                "cancelButtonText": "No, Cancel",
-                "confirmButtonText": "Yes, Delete",
-                "reverseButtons": true,
-                "confirmButtonColor": "red",
-            })
-            .then(function(result) {
-                if (result.isConfirmed) {
-                    window.location.href = "/parameter/delete/"+id+"/";
-                }
-            });
-        }
+        Swal.fire({
+            "title": "Are you sure?",
+            "text": "This action can't be reversed",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, Cancel",
+            "confirmButtonText": "Yes, Delete",
+            "reverseButtons": true,
+            "confirmButtonColor": "red",
+        })
+        .then(function(result) {
+            if (result.isConfirmed) {
+                window.location.href = "/parameter/delete/" + id + "/";
+            }
+        });
+    }
 </script>
 <main class="container py-5">
     <section class="card card-body">
         <div class="text-center">
             <img src="{% static 'images/logo-jpm-brown.svg' %}" class="img-fluid" style="height: 150px;width: 50%"/>
-            <h1 class="display-6 text-center" >Cert Environment Administration</h1><br>
+            <h1 class="display-6 text-center">Cert Environment Administration</h1><br>
         </div>
         <div class="d-flex justify-content-end mb-3">
             <a href="{% url 'parameter_create' %}" class="btn btn-success">
@@ -38,29 +37,35 @@
             <thead class="border-bottom table-dark">
                 <tr>
                     <td>CompID</td>
-                    <td>Parameter 1</td>
-                    <td>Parameter 2</td>
-                    <td>Parameter 3</td>
-                    <td>Parameter 4</td>
+                    <td>Product</td>
+                    <td>Security</td>
+                    <td>Currency Pair</td>
+                    <td>Value Date</td>
+                    <td>Notional</td>
+                    <td>Side</td>
                     <td>Last Updated</td>
+                    <td>User</td>
                     <td>Actions</td>
                 </tr>
             </thead>
             <tbody class="table-group-divider border-success">
                 {% for parameter in parameters_list %}
                     <tr>
-                        <td>{{parameter.compID}}</td>
-                        <td>{{parameter.parameter1}}</td>
-                        <td>{{parameter.parameter2}}</td>
-                        <td>{{parameter.parameter3}}</td>
-                        <td>{{parameter.parameter4}}</td>
-                        <td>{{parameter.updated}}</td>
+                        <td>{{ parameter.compID }}</td>
+                        <td>{{ parameter.product }}</td>
+                        <td>{{ parameter.security }}</td>
+                        <td>{{ parameter.currency_pair }}</td>
+                        <td>{{ parameter.value_date }}</td>
+                        <td>{{ parameter.notional }}</td>
+                        <td>{{ parameter.get_side_display }}</td>
+                        <td>{{ parameter.updated }}</td>
+                        <td>{{ parameter.user.get_full_name|default:parameter.user.username }}</td>
                         <td>
                             <a href="{% url 'parameter_detail' parameter.id %}" class="btn text-secondary px-0">
                                 <i class="far fa-edit fa-lg"></i>
                             </a>
                             {% if user.is_staff %}
-                            <a href="#" onclick="console.log({{parameter.id}});deleteParameter({{parameter.id}})" class="btn text-secondary px-0">
+                            <a href="#" onclick="deleteParameter({{ parameter.id }})" class="btn text-secondary px-0">
                                 <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
                             </a>
                             {% endif %}
@@ -69,7 +74,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
     </section>
 </main>
 {% endblock %}

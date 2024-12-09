@@ -14,9 +14,12 @@ from parameters.models import Parameter
 def home(request):
     try:
         if request.user.is_staff:
-            context = {'parameters_list': Parameter.objects.all().order_by('compID').values()}
+            parameters = Parameter.objects.select_related('user').all().order_by('compID')
         else:
-            context = {'parameters_list': Parameter.objects.filter(user=request.user).order_by('compID').values()}
+            parameters = Parameter.objects.select_related('user').filter(user=request.user).order_by('compID')
+
+        # Prepare context for rendering
+        context = {'parameters_list': parameters}
         return render(request, "home.html", context)
     except Exception as e:
         print(e)
