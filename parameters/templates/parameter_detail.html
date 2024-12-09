@@ -2,25 +2,106 @@
 {% load static %}
 {% block content %}
 
-<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-            <img class="card-img-top" src="{% static 'images/logo-jpm-brown.svg' %}" alt="Card image cap">
-				<div class="d-flex justify-content-center ">
-					<h3 class="text-success" id="form-title">Cert Environment Parameters</h3>
-				</div>
-            {{error}}
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{form.as_p}}
-                <div class="d-flex justify-content-center mt-3 login_container">
-                    <input class="btn btn-success" type="submit" value="Update">&nbsp;
-                    <a class="btn btn-secondary" href="{% url 'home'%}">Home</a>
-                </div>
-            </form>
-
+<main class="container py-5">
+    <section class="card card-body" style="background-color: #a0a0a0; color: black;">
+        <div class="text-center">
+            <img src="{% static 'images/logo-jpm-brown.svg' %}" class="img-fluid" style="height: 150px;width: 50%;" />
+            <h1 class="display-6 text-center">Edit Parameter Details</h1>
+            <br>
         </div>
-    </div>
-</div>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{% url 'home' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_compID" class="form-label">CompID</label>
+                <div class="col-md-5 mb-3">
+                    {{ form.compID }}
+                </div>
+            </div>
+            <div class="row">
+                <!-- Left Column: STP Type -->
+                <div class="col-md-6">
+                    <h5 class="text-center border-bottom pb-2" style="color: black;">STP Type</h5>
+                    <div class="form-group">
+                        <label for="id_product" class="form-label">Product</label>
+                        {{ form.product }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_security" class="form-label">Security</label>
+                        {{ form.security }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_currency_pair" class="form-label">Currency Pair</label>
+                        {{ form.currency_pair }}
+                    </div>
+                </div>
+                <!-- Right Column: Trade Details -->
+                <div class="col-md-6">
+                    <h5 class="text-center border-bottom pb-2" style="color: black;">Trade Details</h5>
+                    <div class="form-group">
+                        <label for="id_value_date" class="form-label">Value Date</label>
+                        {{ form.value_date }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_notional" class="form-label">Notional</label>
+                        {{ form.notional }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_side" class="form-label">Side</label>
+                        {{ form.side }}
+                    </div>
+                </div>
+            </div>
+            <!-- Update Button -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Update Parameters
+                </button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script>
+    // Define options based on product selection
+    const securityOptions = {
+        FOR: ['FXNDF', 'FXSWAP', 'FXFORWARD', 'FXSPOT'],
+        OPT: ['VANILLA', 'SINGLE_BARRIER'],
+        DEFAULT: ['FXNDF', 'FXSWAP', 'FXFORWARD', 'FXSPOT'] // Default FX Cash options
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const productField = document.getElementById('id_product');
+        const securityField = document.getElementById('id_security');
+
+        // Populate default security options if none are selected
+        const currentProduct = productField.value || 'DEFAULT';
+        const options = securityOptions[currentProduct] || securityOptions.DEFAULT;
+
+        options.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option;
+            opt.textContent = option;
+            opt.selected = option === securityField.value;
+            securityField.appendChild(opt);
+        });
+
+        productField.addEventListener('change', () => {
+            const product = productField.value;
+            const options = securityOptions[product] || securityOptions.DEFAULT;
+            securityField.innerHTML = '';
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                securityField.appendChild(opt);
+            });
+        });
+    });
+</script>
 
 {% endblock %}
