@@ -26,7 +26,7 @@
     <section class="card card-body">
         <div class="text-center">
             <img src="{% static 'images/logo-jpm-brown.svg' %}" class="img-fluid" style="height: 150px;width: 50%"/>
-            <h1 class="display-6 text-center">Cert Environment Administration</h1><br>
+            <h1 class="display-6 text-center">JPM STP Self Certification Administration</h1><br>
         </div>
         <div class="d-flex justify-content-end mb-3">
             <a href="{% url 'parameter_create' %}" class="btn btn-success">
@@ -52,7 +52,7 @@
                 {% for parameter in parameters_list %}
                     <tr>
                         <td>{{ parameter.compID }}</td>
-                        <td>{{ parameter.product }}</td>
+                        <td>{{ parameter.get_product_display }}</td>
                         <td>{{ parameter.security }}</td>
                         <td>{{ parameter.currency_pair }}</td>
                         <td>{{ parameter.value_date }}</td>
