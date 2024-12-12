@@ -6,10 +6,10 @@
 <main class="container py-5">
     <section class="card card-body" style="background-color: #a0a0a0; color: black;">
         <div class="text-center">
-            <img src="{% static 'images/logo-jpm-brown.svg' %}" class="img-fluid" style="height: 150px; width: 50%;" />
-            <h1 class="display-6 text-center">JPM STP Self Certification</h1>
-            <br>
+            <img src="{% static 'images/logo-jpm-brown.svg' %}" class="img-fluid" style="height: 75px; width: auto;" />
+            <h1 class="display-7">JPM STP Self Certification</h1>
         </div>
+
         <!-- Display error messages -->
         {% if error %}
         <div class="alert alert-danger" role="alert">
@@ -28,15 +28,15 @@
         </div>
         {% endif %}
 
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_compID" class="form-label">CompID</label>
-            <div class="col-md-5 mb-3">
-                {{ form.compID }}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_compID" class="form-label">CompID</label>
+                <div class="col-md-5 mb-3">
+                    {{ form.compID }}
+                </div>
             </div>
-        </div>
-        <div class="row">
+            <div class="row">
                 <!-- Left Column: STP Type -->
                 <div class="col-md-6">
                     <h5 class="text-center border-bottom pb-2" style="color: black;">STP Type</h5>
@@ -70,14 +70,14 @@
                     </div>
                 </div>
             </div>
-            <!-- Update Button -->
+            <!-- Save Button -->
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-success">
                     <i class="fas fa-save"></i> Update Trade
                 </button>
                 <div class="d-flex justify-content-end mb-3">
                     <a href="{% url 'home' %}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
                     </a>
                 </div>
             </div>
@@ -100,31 +100,31 @@
     document.addEventListener('DOMContentLoaded', () => {
         const productField = document.getElementById('id_product');
         const securityField = document.getElementById('id_security');
+        const dateField = document.getElementById('id_value_date');
 
-        // Populate default security options if none are selected
-        const currentProduct = productField.value || 'DEFAULT';
-        const options = securityOptions[currentProduct] || securityOptions.DEFAULT;
+        // Set today's date as default value for the date field
+        const today = new Date().toISOString().split('T')[0];
+        dateField.value = today;
 
-        options.forEach(option => {
-            const opt = document.createElement('option');
-            opt.value = option;
-            opt.textContent = option;
-            opt.selected = option === securityField.value;
-            securityField.appendChild(opt);
-        });
-
-        productField.addEventListener('change', () => {
-            const product = productField.value;
+        // Populate security options based on the initial product value
+        const populateSecurityOptions = (product) => {
             const options = securityOptions[product] || securityOptions.DEFAULT;
-            securityField.innerHTML = '';
+            securityField.innerHTML = ''; // Clear existing options
             options.forEach(option => {
                 const opt = document.createElement('option');
                 opt.value = option;
                 opt.textContent = option;
                 securityField.appendChild(opt);
             });
+        };
+
+        // Initialize security field based on the current product selection
+        populateSecurityOptions(productField.value);
+
+        // Update security field when product selection changes
+        productField.addEventListener('change', () => {
+            populateSecurityOptions(productField.value);
         });
     });
 </script>
-
 {% endblock %}

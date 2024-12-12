@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 
-from parameters.forms import CreateUserForm, ParametersForm
+from parameters.forms import CreateUserForm, ParametersForm, EditParametersForm
 from parameters.models import Parameter
 
 
@@ -94,7 +94,7 @@ def parameter_create(request):
 def parameter_detail(request, parameter_id):
     if request.method == 'GET':
         parameter = get_object_or_404(Parameter, pk=parameter_id)
-        form = ParametersForm(instance=parameter)
+        form = EditParametersForm(instance=parameter)
         return render(request, 'parameter_detail.html', {'parameter': parameter, 'form': form})
     else:
         try:

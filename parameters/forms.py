@@ -43,3 +43,12 @@ class ParametersForm(forms.ModelForm):
                 'class': 'form-control bg-light border-dark text-dark font-weight-bold'
             }),
         }
+
+
+class EditParametersForm(ParametersForm):
+    class Meta(ParametersForm.Meta):
+        widgets = ParametersForm.Meta.widgets.copy()
+        widgets['compID'] = forms.TextInput(attrs={
+            'class': 'form-control',
+            'readonly': 'readonly'
+        })
