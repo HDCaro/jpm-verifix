@@ -10,12 +10,6 @@
             <h1 class="display-6 text-center">JPM STP Self Certification</h1>
             <br>
         </div>
-        <div class="d-flex justify-content-end mb-3">
-            <a href="{% url 'home' %}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </a>
-        </div>
-
         <!-- Display error messages -->
         {% if error %}
         <div class="alert alert-danger" role="alert">
@@ -39,7 +33,7 @@
         <div class="form-group">
             <label for="id_compID" class="form-label">CompID</label>
             <div class="col-md-5 mb-3">
-                <p class="form-control-plaintext"><b>{{ form.compID.value }}</b></p>
+                {{ form.compID }}
             </div>
         </div>
         <div class="row">
@@ -81,6 +75,11 @@
                 <button type="submit" class="btn btn-success">
                     <i class="fas fa-save"></i> Update Trade
                 </button>
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{% url 'home' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
             </div>
         </form>
     </section>
